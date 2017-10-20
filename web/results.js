@@ -39,8 +39,16 @@ class Results {
       d.innerHTML += url;
       d.id = url;
       this.list.appendChild(d);
+      d.style.color = "lightgrey";
+      setTimeout(
+        function () {
+          if (d.style.color == "lightgrey") {
+            d.style.color = "pink";
+          }
+        }
+      , 3000);
     } else {
-      d.style.color = result ? "lightgrey" : "red";
+      d.style.color = result ? "darkgrey" : "red";
       if (!result) {
         this.errorCount += 1;
       }
