@@ -14,7 +14,7 @@ class Net {
     // Load an image with a source under that URL.
     // This is a hack to work around CORS
     // TODO: Clear the "test" div if the previous check has finished.
-    this.div.appendChild(this._img(url, onload, onerror));
+    this.div.appendChild(Net._img(url, onload, onerror));
   }
 
   /**
@@ -27,15 +27,20 @@ class Net {
   /**
     Creates an image with the given URL
   **/
-  _img(url, onload, onerror) {
+  static _img(url, onload, onerror) {
     var i = new Image();
-    var n = this;
-    i.onerror = function (e) {
-      onerror(url);
-    };
-    i.onload = function (e) {
-      onload(url);
-    };
+    if (onload) {
+      i.onload = function (e) {
+        console.log(url, "onload");
+        onload(url);
+      };
+    }
+    if (onerror) {
+      i.onerror = function (e) {
+        console.log(url, "onerror");
+        onerror(url);
+      };
+    }
     i.src = Net._src(url)
     return i;
   }
@@ -47,6 +52,6 @@ class Net {
     // TODO: Check if it already has protocol
     // TODO: Check if it already has path
     // TODO: Remove subdomains
-    return "https://" + url + "/favicon.ico";
+    return "https://" + url + "/favicon.ico?nocache=" + Date.now();
   }
 }

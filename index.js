@@ -39,7 +39,7 @@ const results = new Results();
 /**
   Fires if the website is up.
 **/
-function onload(url, e) {
+function onload(url) {
   // console.log(e);
   console.log("UP", url);
   net.report(url, true);
@@ -49,7 +49,7 @@ function onload(url, e) {
 /**
   Fires if the website is down.
 **/
-function onerror(url, e) {
+function onerror(url) {
   // console.log(e);
   console.log("DOWN", url);
   net.report(url, false);
@@ -62,5 +62,7 @@ const net = new Net();
 
 // Check all the URLs
 for (var i in URLS) {
-  net.ping(URLS[i], onload, onerror);
+  const url = URLS[i];
+  results.write(url, null);
+  net.ping(url, onload, onerror);
 }
