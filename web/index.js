@@ -8,7 +8,7 @@ URLS = [
   // News and media
   /*"dw.com", "reuters.com"*/ "bbc.com",
   // Communication
-  "telegram.org", "telegra.ph", "whatsapp.com", /*"viber.com",*/
+  "line.me", "telegram.org", "telegra.ph", "whatsapp.com", /*"viber.com",*/
   // Social networks
   "twitter.com", "facebook.com", "linkedin.com", "youtube.com", "stackexchange.com",
   // Journalism
