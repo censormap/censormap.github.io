@@ -10,7 +10,9 @@ URLS = [
   // Communication
   "line.me", "telegram.org", "telegra.ph", "whatsapp.com", /*"viber.com",*/
   // Social networks
-  "twitter.com", "facebook.com", "linkedin.com", "youtube.com", "stackexchange.com",
+  "twitter.com", "facebook.com", "linkedin.com", "stackexchange.com",
+  // Video and audio
+  "youtube.com", /*"dailymotion.com"*/, "soundcloud.com", "vimeo.com",
   // Journalism
   "cpj.org", /*"rsf.org",*/
   // Academic research
@@ -18,21 +20,24 @@ URLS = [
   // Tor
   "torproject.org",
   // Marketplaces
-  "alibaba.com", "amazon.com", "ebay.com",
-  // Copyrighted materials
-    // TODO
+  "alibaba.com", "amazon.com", "ebay.com", "rakuten.co.jp",
+  // Filesharing
+  /*"dropbox.com", "thepiratebay.se",*/ "scribd.com",
   // Adult
     // TODO
   // Source code
   "apache.org", "github.com", "gitlab.com", "bitbucket.com",
   // TODO: Torrent sites, .onion
+  // Web archives
+  "archive.org"
 ];
 // TODO: Country-specific TLDs
 
 // TODO:
-// Sites without a favicon.ico: viber.com, reuters.com
-// Sites with a favicon.ico at another path: rsf.org, wikimedia.org, wikileaks.org
-// Sites with a favicon.png: dw.com
+// Sites without a favicon.ico or with a favicon at another path:
+// viber.com, reuters.com, rsf.org, wikimedia.org, wikileaks.org, dw.com,
+// dailymotion.com
+// Sites that are down long-term: thepiratebay.se
 
 const results = new Results();
 
