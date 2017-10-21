@@ -1,0 +1,44 @@
+body {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-weight: 200;
+    padding: 40px;
+    font-size: 1em;
+}
+
+.stats {
+  font-weight: 400;
+  padding: 20px;
+}
+
+.list {
+
+}
+
+.result {
+  padding: 0.5em;
+  white-space: nowrap
+}
+
+.favicon {
+    width: 1em;
+    height: 1em;
+    padding-right: 1em;
+    opacity: 0.7;
+    vertical-align: middle;
+}
+
+.start {
+  color: lightgrey;
+}
+
+.late {
+  color: lightcoral;
+}
+
+.down {
+  color: indianred;
+}
+
+.up {
+  color: grey;
+}

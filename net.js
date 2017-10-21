@@ -50,7 +50,7 @@ class Net {
     Creates an image with the favicon for the given domain
   **/
   static _favicon(domain, onload, onerror) {
-    var i = new Image();
+    var i = document.createElement("img");
     i.src = "https://www.google.com/s2/favicons?domain=" + domain;
     return i;
   }

@@ -6,21 +6,17 @@ class Results {
     document.getElementsByTagName('body')[0].appendChild(this.div);
 
     this.stats = document.createElement("div");
+    this.stats.className = 'stats';
     this.div.appendChild(this.stats);
+    this.stats.innerHTML = "<p>blocked: <span class='start'>none</span>";
 
     this.list = document.createElement("div");
+    this.list.className = 'list';
     this.div.appendChild(this.list);
 
+    this.blocked = [];
     this.errorCount = 0;
     this.totalCount = 0;
-  }
-
-  /**
-    Clears the dashboard
-  **/
-  clear(domain, result) {
-    this.stats.innerHTML = '';
-    this.list.innerHTML = '';
   }
 
   /**
@@ -30,33 +26,36 @@ class Results {
     var d = document.getElementById(domain);
     if (!d) {
       var d = document.createElement("div");
-      var i = Net._favicon(domain);
-      i.style.width = "1em";
-      i.style.height = "1em";
-      i.style.opacity = "0.3";
-      i.style.paddingRight = "10px";
-      d.appendChild(i);
-      d.style.padding = "5px";
-      d.innerHTML += domain;
+      d.className = 'result start';
       d.id = domain;
+      var i = Net._favicon(domain);
+      i.className = 'favicon';
+      d.appendChild(i);
+      var s = document.createElement("span");
+      s.className = 'domain notranslate';
+      s.innerHTML = domain;
+      d.appendChild(s);
       this.list.appendChild(d);
-      d.style.color = "lightgrey";
       setTimeout(
         function () {
-          if (d.style.color == "lightgrey") {
-            d.style.color = "pink";
+          if (d.className == 'result start') {
+            d.className = 'result late';
           }
         }
       , 3000);
-    } else {
-      d.style.color = result ? "darkgrey" : "red";
+    }
+    if (result != null) {
+      d.className = result? 'result up' : 'result down';
       if (!result) {
+        var s = "<span class='result down'>" + domain + "</span>";
+        if (!this.errorCount) {
+          this.stats.innerHTML = "<p>blocked: " + s;
+        } else {
+          this.stats.innerHTML += ", " + s;
+        }
         this.errorCount += 1;
       }
       this.totalCount += 1;
-    }
-    if (this.totalCount) {
-      this.stats.innerHTML = Math.floor(100 * (this.totalCount - this.errorCount) / this.totalCount) + "%";
     }
   }
 }
