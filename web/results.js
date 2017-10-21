@@ -33,6 +33,7 @@ class Results {
       var i = Net._favicon(domain);
       i.style.width = "1em";
       i.style.height = "1em";
+      i.style.opacity = "0.3";
       i.style.paddingRight = "10px";
       d.appendChild(i);
       d.style.padding = "5px";
