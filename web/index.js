@@ -1,4 +1,5 @@
 const results = new Results();
+const net = new Net();
 
 /**
   Fires if the website is up.
@@ -20,8 +21,7 @@ function onerror(domain) {
   results.write(domain, false);
 }
 
-const net = new Net();
-
+// To test the error case:
 // net.ping("example.doesnotexist", onload, onerror);
 
 // Check all the domains

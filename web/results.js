@@ -55,7 +55,7 @@ class Results {
       this.totalCount += 1;
     }
     if (this.totalCount) {
-      this.stats.innerHTML = (100.0 * (this.totalCount - this.errorCount) / this.totalCount) + "%";
+      this.stats.innerHTML = Math.floor(100 * (this.totalCount - this.errorCount) / this.totalCount) + "%";
     }
   }
 }
