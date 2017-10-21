@@ -8,7 +8,7 @@ class Results {
     this.stats = document.createElement("div");
     this.stats.className = 'stats';
     this.div.appendChild(this.stats);
-    this.stats.innerHTML = "<p>blocked: <span class='start'>none</span>";
+    this.stats.innerHTML = "blocked: <span class='start'>none</span>";
 
     this.list = document.createElement("div");
     this.list.className = 'list';
@@ -47,15 +47,26 @@ class Results {
     if (result != null) {
       d.className = result? 'result up' : 'result down';
       if (!result) {
-        var s = "<span class='result down'>" + domain + "</span>";
+        var sep;
         if (!this.errorCount) {
-          this.stats.innerHTML = "<p>blocked: " + s;
+          sep = "blocked: ";
+          this.stats.innerHTML = '';
         } else {
-          this.stats.innerHTML += ", " + s;
+          sep = ", ";
         }
+        var s = document.createElement("span");
+        s.innerHTML = sep;
+        this.stats.appendChild(s);
+        var s = document.createElement("span");
+        s.innerHTML = domain;
+        s.className = 'result down';
+        this.stats.appendChild(s);
         this.errorCount += 1;
       }
       this.totalCount += 1;
+      if (this.errorCount > 10 && this.totalCount == this.errorCount) {
+        this.stats.innerHTML = "Check your internet connection";
+      }
     }
   }
 }
