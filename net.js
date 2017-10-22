@@ -4,7 +4,7 @@ class Net {
 
   constructor() {
     this.div = document.createElement("div");
-    this.div.style.visibility = "hidden";
+    this.div.style.display = "none";
     document.getElementsByTagName('body')[0].appendChild(this.div);
   }
 

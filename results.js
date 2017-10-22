@@ -25,7 +25,7 @@ class Results {
   write(domain, result) {
     var d = document.getElementById(domain);
     if (!d) {
-      var d = document.createElement("div");
+      var d = document.createElement("span");
       d.className = 'result start';
       d.id = domain;
       var i = Net._favicon(domain);
@@ -35,6 +35,7 @@ class Results {
       s.className = 'domain notranslate';
       s.innerHTML = domain;
       d.appendChild(s);
+      this.list.innerHTML += ' ';
       this.list.appendChild(d);
       setTimeout(
         function () {

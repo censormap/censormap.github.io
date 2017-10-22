@@ -1,57 +1,86 @@
 body {
   font-family: Helvetica, Arial, Sans-Serif;
   font-weight: 200;
+  cursor: default;
+  color: grey;
 }
 
 @media screen {
   body {
-    padding: 0px;
+    padding-left: 0px;
     font-size: 1.5em;
   }
 }
 
 @media only screen and (min-width: 200px) {
   body {
-    padding: 5px;
+    padding-left: 5px;
     font-size: 1.4em;
   }
 }
 
 @media screen and (min-width:400px) {
   body {
-    padding: 20px;
+    padding-left: 20px;
     font-size: 1.3em;
   }
 }
 
 @media screen and (min-width:800px) {
   body {
-    padding: 40px;
+    padding-left: 40px;
     font-size: 1.2em;
   }
 }
 
+h1, h2, h3, h4, h5 {
+  font-weight: 300;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+header {
+  color: lightgrey;
+}
+
+header a {
+  color: lightgrey;
+  padding-right: 1em;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+footer {
+  padding-top: 2em;
+  color: lightgrey;
+}
+
+footer i {
+  color: lightgrey;
+}
+
 .stats {
-  font-weight: 400;
-  padding: 20px;
+
 }
 
 .list {
-  font-size: 16px;
+  padding-top: 0.5em;
+  font-size: 0.5em;
 }
 
 .result {
   padding: 0.5em;
+  line-height: 2em;
+  white-space: nowrap;
 }
 
 .domain {
-  
+  padding-left: 0.5em;
 }
 
 .favicon {
     width: 1em;
     height: 1em;
-    padding-right: 1em;
     opacity: 0.7;
     vertical-align: middle;
 }
