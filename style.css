@@ -1,8 +1,34 @@
 body {
-    font-family: Helvetica, Arial, Sans-Serif;
-    font-weight: 200;
+  font-family: Helvetica, Arial, Sans-Serif;
+  font-weight: 200;
+}
+
+@media screen {
+  body {
+    padding: 0px;
+    font-size: 1.5em;
+  }
+}
+
+@media only screen and (min-width: 200px) {
+  body {
+    padding: 5px;
+    font-size: 1.4em;
+  }
+}
+
+@media screen and (min-width:400px) {
+  body {
+    padding: 20px;
+    font-size: 1.3em;
+  }
+}
+
+@media screen and (min-width:800px) {
+  body {
     padding: 40px;
-    font-size: 1em;
+    font-size: 1.2em;
+  }
 }
 
 .stats {
@@ -11,12 +37,11 @@ body {
 }
 
 .list {
-
+  font-size: 16px;
 }
 
 .result {
   padding: 0.5em;
-  white-space: nowrap
 }
 
 .favicon {
