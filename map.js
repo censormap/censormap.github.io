@@ -42,13 +42,13 @@ function makeInfoBox(controlDiv, map) {
 }
 
 // Initialize Firebase
-// TODO: Replace with your project's customized code snippet
 var config = {
-  apiKey: "AIzaSyBb_6ipfYj0Y2iBAua-ER2ULWv2E2fmhiE",
+  apiKey: "AIzaSyBJTHqxiXmeZ8ere_TQH_-UgG8bsGWFy-4",
   authDomain: "censormap.firebaseapp.com",
   databaseURL: "https://censormap.firebaseio.com",
-/*  storageBucket: "<BUCKET>.appspot.com",
-  messagingSenderId: "<SENDER_ID>",*/
+  projectId: "censormap",
+  storageBucket: "censormap.appspot.com",
+  messagingSenderId: "810696107628"
 };
 firebase.initializeApp(config);
 
@@ -129,7 +129,7 @@ function initFirebase(heatmap) {
   var startTime = new Date().getTime() - (60 * 10 * 1000);
 
   // Reference to the clicks in Firebase.
-  var clicks = firebase.child('clicks');
+  var clicks = firebase.database().ref('clicks');
 
   // Listener for when a click is added.
   clicks.orderByChild('timestamp').startAt(startTime).on('child_added',
