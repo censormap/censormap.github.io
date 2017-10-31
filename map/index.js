@@ -19,6 +19,8 @@ var data = {
   lng: null
 };
 
+const ONE_WEEK = 7 * 24 * 60 * 60 * 1000; // ms
+
 function makeInfoBox(controlDiv, map) {
   // Set CSS for the control border.
   var controlUI = document.createElement('div');
@@ -37,7 +39,7 @@ function makeInfoBox(controlDiv, map) {
   controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
   controlText.style.fontSize = '100%';
   controlText.style.padding = '6px';
-  controlText.textContent = 'The map shows all clicks made in the last 10 minutes.';
+  controlText.textContent = 'The map shows all clicks made in the last week.';
   controlUI.appendChild(controlText);
 }
 
@@ -125,8 +127,8 @@ function initMap() {
  */
 function initFirebase(heatmap) {
 
-  // 10 minutes before current time.
-  var startTime = new Date().getTime() - (60 * 10 * 1000);
+  // 1 week before current time.
+  var startTime = new Date().getTime() - ONE_WEEK;
 
   // Reference to the clicks in Firebase.
   var clicks = firebase.database().ref('clicks');
@@ -143,8 +145,8 @@ function initFirebase(heatmap) {
       // Add the point to  the heatmap.
       heatmap.getData().push(point);
 
-      // Requests entries older than expiry time (10 minutes).
-      var expirySeconds = Math.max(60 * 10 * 1000 - elapsed, 0);
+      // Requests entries older than expiry time (1 week).
+      var expirySeconds = Math.max(ONE_WEEK - elapsed, 0);
       // Set client timeout to remove the point after a certain time.
       window.setTimeout(function() {
         // Delete the old point from the database.
