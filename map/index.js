@@ -39,7 +39,7 @@ function makeInfoBox(controlDiv, map) {
   controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
   controlText.style.fontSize = '100%';
   controlText.style.padding = '6px';
-  controlText.textContent = 'The map shows all clicks made in the last week.';
+  controlText.textContent = 'The map shows all pings made in the last week.';
   controlUI.appendChild(controlText);
 }
 
@@ -103,7 +103,8 @@ function initMap() {
   makeInfoBox(infoBoxDiv, map);
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(infoBoxDiv);
 
-  // Listen for clicks and add the location of the click to firebase.
+  // For testing:
+  // Listen for clicks and add the location of the click to firebase as a ping.
   map.addListener('click', function(e) {
     data.lat = e.latLng.lat();
     data.lng = e.latLng.lng();
@@ -111,17 +112,27 @@ function initMap() {
   });
 
   // Create a heatmap.
-  var heatmap = new google.maps.visualization.HeatmapLayer({
+  var conn_heatmap = new google.maps.visualization.HeatmapLayer({
     data: [],
     map: map,
-    radius: 16
+    radius: 16,
+    gradient: 'rgba(127, 0, 63, 1)'
   });
 
-  initAuthentication(initFirebase.bind(undefined, heatmap));
+  // Create a heatmap.
+  var block_heatmap = new google.maps.visualization.HeatmapLayer({
+    data: [],
+    map: map,
+    radius: 16,
+    gradient: 'rgba(0, 191, 255, 1)'
+  });
+
+  initAuthentication(initFirebase.bind(undefined, conn_heatmap));
+  initAuthentication(initFirebase.bind(undefined, block_heatmap));
 }
 
 /**
- * Set up a Firebase with deletion on clicks older than expirySeconds
+ * Set up a Firebase with deletion on pings older than expiryMilliseconds
  * @param {!google.maps.visualization.HeatmapLayer} heatmap The heatmap to
  * which points are added from Firebase.
  */
@@ -130,33 +141,38 @@ function initFirebase(heatmap) {
   // 1 week before current time.
   var startTime = new Date().getTime() - ONE_WEEK;
 
-  // Reference to the clicks in Firebase.
-  var clicks = firebase.database().ref('clicks');
+  // Reference to the pings in Firebase.
+  var pings = firebase.database().ref('pings');
 
-  // Listener for when a click is added.
-  clicks.orderByChild('timestamp').startAt(startTime).on('child_added',
+  // Listener for when a ping is added.
+  // TODO: get last n
+  pings.orderByChild('timestamp').startAt(startTime).on('child_added',
     function(snapshot) {
 
-      // Get that click from firebase.
-      var newPosition = snapshot.val();
-      var point = new google.maps.LatLng(newPosition.lat, newPosition.lng);
-      var elapsed = new Date().getTime() - newPosition.timestamp;
+      // Get that ping from firebase.
+      var ping = snapshot.val();
+      var point = new google.maps.LatLng(ping.lat, ping.lng);
+      var elapsed = new Date().getTime() - ping.timestamp;
 
       // Add the point to  the heatmap.
-      heatmap.getData().push(point);
+      if (ping.blocked) {
+        block_heatmap.getData().push(point);
+      } else {
+        conn_heatmap.getData().push(point);
+      }
 
       // Requests entries older than expiry time (1 week).
-      var expirySeconds = Math.max(ONE_WEEK - elapsed, 0);
+      var expiryMilliseconds = Math.max(ONE_WEEK - elapsed, 0);
       // Set client timeout to remove the point after a certain time.
       window.setTimeout(function() {
         // Delete the old point from the database.
         snapshot.ref().remove();
-      }, expirySeconds);
+      }, expiryMilliseconds);
     }
   );
 
   // Remove old data from the heatmap when a point is removed from firebase.
-  clicks.on('child_removed', function(snapshot, prevChildKey) {
+  pings.on('child_removed', function(snapshot, prevChildKey) {
     var heatmapData = heatmap.getData();
     var i = 0;
     while (snapshot.val().lat != heatmapData.getAt(i).lat()
@@ -169,13 +185,13 @@ function initFirebase(heatmap) {
 
 /**
  * Updates the last_message/ path with the current timestamp.
- * @param {function(Date)} addClick After the last message timestamp has been updated,
+ * @param {function(Date)} addPing After the last message timestamp has been updated,
  *     this function is called with the current timestamp to add the
- *     click to the firebase.
+ *     ping to the firebase.
  */
-function getTimestamp(addClick) {
-  // Reference to location for saving the last click time.
-  var ref = firebase.database().ref('last_message/' + data.sender);
+function getTimestamp(addPing) {
+  // Reference to location for saving the last ping time.
+  var ref = firebase.database().ref('last_ping/' + data.sender);
 
   ref.onDisconnect().remove();  // Delete reference from firebase on disconnect.
 
@@ -185,7 +201,7 @@ function getTimestamp(addClick) {
       console.log(err);
     } else {  // Write to last message was successful.
       ref.once('value', function(snap) {
-        addClick(snap.val());  // Add click with same timestamp.
+        addPing(snap.val());  // Add ping with same timestamp.
       }, function(err) {
         console.warn(err);
       });
@@ -194,7 +210,7 @@ function getTimestamp(addClick) {
 }
 
 /**
- * Adds a click to firebase.
+ * Adds a ping to firebase.
  * @param {Object} data The data to be added to firebase.
  *     It contains the lat, lng, sender and timestamp.
  */
@@ -202,7 +218,7 @@ function addToFirebase(data) {
   getTimestamp(function(timestamp) {
     // Add the new timestamp to the record data.
     data.timestamp = timestamp;
-    var clicks = firebase.database().ref('clicks').push(data, function(err) {
+    var pings = firebase.database().ref('pings').push(data, function(err) {
       if (err) {  // Data was not written to firebase.
         console.warn(err);
       }
