@@ -180,7 +180,7 @@ function getTimestamp(addClick) {
   ref.onDisconnect().remove();  // Delete reference from firebase on disconnect.
 
   // Set value to timestamp.
-  ref.set(Firebase.ServerValue.TIMESTAMP, function(err) {
+  ref.set(firebase.database.ServerValue.TIMESTAMP, function(err) {
     if (err) {  // Write to last message was unsuccessful.
       console.log(err);
     } else {  // Write to last message was successful.
