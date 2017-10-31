@@ -127,16 +127,17 @@ function initMap() {
     gradient: 'rgba(0, 191, 255, 1)'
   });
 
-  initAuthentication(initFirebase.bind(undefined, conn_heatmap));
-  initAuthentication(initFirebase.bind(undefined, block_heatmap));
+  initAuthentication(initFirebase.bind(undefined, block_heatmap, conn_heatmap));
 }
+
+var PINGS = [];
 
 /**
  * Set up a Firebase with deletion on pings older than expiryMilliseconds
- * @param {!google.maps.visualization.HeatmapLayer} heatmap The heatmap to
+ * @param {!google.maps.visualization.HeatmapLayer} heatmap The heatmaps to
  * which points are added from Firebase.
  */
-function initFirebase(heatmap) {
+function initFirebase(block_heatmap, conn_heatmap) {
 
   // 1 week before current time.
   var startTime = new Date().getTime() - ONE_WEEK;
@@ -154,7 +155,9 @@ function initFirebase(heatmap) {
       var point = new google.maps.LatLng(ping.lat, ping.lng);
       var elapsed = new Date().getTime() - ping.timestamp;
 
-      // Add the point to  the heatmap.
+      console.log(JSON.stringify(ping));
+      PINGS.push(ping);
+      // Add the point to a heatmap.
       if (ping.blocked) {
         block_heatmap.getData().push(point);
       } else {
@@ -173,13 +176,16 @@ function initFirebase(heatmap) {
 
   // Remove old data from the heatmap when a point is removed from firebase.
   pings.on('child_removed', function(snapshot, prevChildKey) {
-    var heatmapData = heatmap.getData();
-    var i = 0;
-    while (snapshot.val().lat != heatmapData.getAt(i).lat()
-      || snapshot.val().lng != heatmapData.getAt(i).lng()) {
-      i++;
-    }
-    heatmapData.removeAt(i);
+    var heatmaps = [block_heatmap, conn_heatmap];
+    for (let heatmap of heatmaps) {
+      var heatmapData = heatmap.getData();
+      var i = 0;
+      while (snapshot.val().lat != heatmapData.getAt(i).lat()
+        || snapshot.val().lng != heatmapData.getAt(i).lng()) {
+        i++;
+      }
+      heatmapData.removeAt(i);
+    };
   });
 }
 
