@@ -173,7 +173,7 @@ function initFirebase(heatmap) {
  */
 function getTimestamp(addClick) {
   // Reference to location for saving the last click time.
-  var ref = var clicks = firebase.database().ref('last_message/' + data.sender);
+  var ref = firebase.database().ref('last_message/' + data.sender);
 
   ref.onDisconnect().remove();  // Delete reference from firebase on disconnect.
 
@@ -200,7 +200,7 @@ function addToFirebase(data) {
   getTimestamp(function(timestamp) {
     // Add the new timestamp to the record data.
     data.timestamp = timestamp;
-    var ref = var clicks = firebase.database().ref('clicks').push(data, function(err) {
+    var clicks = firebase.database().ref('clicks').push(data, function(err) {
       if (err) {  // Data was not written to firebase.
         console.warn(err);
       }
