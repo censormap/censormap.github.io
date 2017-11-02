@@ -1,4 +1,13 @@
 
+class Heatmap {
+
+  constructor() {}
+
+  update(data) {
+    addToFirebase(data);
+  }
+}
+
 /**
 * Data object to be written to Firebase.
 */
@@ -227,3 +236,20 @@ function addToFirebase(data) {
     });
   });
 }
+
+BLUE_GRADIENT = [
+          'rgba(0, 255, 255, 0)',
+          'rgba(0, 255, 255, 1)',
+          'rgba(0, 191, 255, 1)',
+          'rgba(0, 127, 255, 1)',
+          'rgba(0, 63, 255, 1)',
+          'rgba(0, 0, 255, 1)',
+          'rgba(0, 0, 223, 1)',
+          'rgba(0, 0, 191, 1)',
+          'rgba(0, 0, 159, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(0, 0, 127, 1)'
+        ]

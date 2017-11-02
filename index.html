@@ -11,7 +11,8 @@
     <script src="https://censormap.org/data/domains.js"></script>
     <script src="net.js"></script>
     <script src="results.js"></script>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+    <script src="map.js"></script>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
         google_ad_client: "ca-pub-8907672779083658",
@@ -28,16 +29,14 @@
       <!--<a href="#map">map</a>-->
     </header>
 
-
-
     <div name="test" id="test">
       <script src="index.js"></script>
     </div>
 
-    <!--<div name="map" id="map">
-      <h2>map</h2>
-    </div>-->
+    <div name="map" id="map">
+    </div>
 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN7v2VcTeu5OIHx9q31mBd9_14bX86tRg&libraries=visualization&callback=initMap"></script>
     <footer>
       <a href="https://github.com/censormap"><i class="fa fa-github"></i></a>
     </footer>

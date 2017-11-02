@@ -1,11 +1,23 @@
-SERVER_URL = "evnbug.org:8000"
-
 class Net {
 
-  constructor() {
+  static getLocation(fn) {
+    // We purposefully do not cache
+    fetch("https://freegeoip.net/json/").then(function(response) {
+      response.json().then(function(data) {
+          console.log("location:", data);
+          fn(data);
+      }.bind(this));
+    }).catch(function() {
+      console.log("Connection failed");
+    });
+  }
+
+  constructor(onInit) {
     this.div = document.createElement("div");
     this.div.style.display = "none";
     document.getElementsByTagName('body')[0].appendChild(this.div);
+
+    this.location = null;
   }
 
   /**
