@@ -107,11 +107,11 @@ function initMap() {
 
   // For testing:
   // Listen for clicks and add the location of the click to firebase as a ping.
-  map.addListener('click', function(e) {
+  /*map.addListener('click', function(e) {
     data.latitude = e.latLng.lat();
     data.longitude = e.latLng.lng();
     addToFirebase(data);
-  });
+  });*/
 
   // Create a heatmap.
   layers['connections'] = new google.maps.visualization.HeatmapLayer({
