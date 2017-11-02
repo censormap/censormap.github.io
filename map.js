@@ -84,9 +84,9 @@ var layers = {};
  * Creates a map object with a click listener and a heatmap.
  */
 function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
+    var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 0, lng: 0},
-    zoom: 3,
+    zoom: 2,
     styles: [{
       featureType: 'poi',
       stylers: [{ visibility: 'off' }]  // Turn off POI.
@@ -126,6 +126,11 @@ function initMap() {
     data: [],
     map: map,
     radius: 16
+  });
+
+  Net.getLocation(function (data) {
+    map.panTo(new google.maps.LatLng(data.latitude, data.longitude));
+    map.zoomTo(3);
   });
 
   initAuthentication(initFirebase.bind(undefined));
