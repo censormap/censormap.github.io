@@ -141,6 +141,7 @@ function initMap() {
 }
 
 var PINGS = [];
+var DEV_IPS = ["212.42.214.162", "78.109.71.242"];
 
 /**
  * Set up a Firebase with deletion on pings older than expiryMilliseconds
@@ -175,11 +176,13 @@ function onAdded (pingRef) {
   console.log(JSON.stringify(ping));
   PINGS.push(ping);
   // Add the point to a heatmap.
-  if (ping.blocks) {
-    console.log("Blocks:" + ping.blocks);
-    layers.blocks.getData().push(point);
-  } else {
-    layers.connections.getData().push(point);
+  if (!ping.ip in DEV_IPS) {
+    if (ping.blocks) {
+      console.log("Blocks:" + ping.blocks);
+      layers.blocks.getData().push(point);
+    } else {
+      layers.connections.getData().push(point);
+    }
   }
 
   // Requests entries older than expiry time (1 week).
