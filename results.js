@@ -2,17 +2,17 @@
 class Results {
 
   constructor() {
-    this.div = document.createElement("div");
-    document.getElementsByTagName('body')[0].appendChild(this.div);
+    this.sec = document.createElement("section");
+    document.getElementsByTagName('body')[0].appendChild(this.sec);
 
     this.stats = document.createElement("div");
     this.stats.className = 'stats';
-    this.div.appendChild(this.stats);
+    this.sec.appendChild(this.stats);
     this.stats.innerHTML = "blocked: <span class='start'>none</span>";
 
     this.list = document.createElement("div");
     this.list.className = 'list';
-    this.div.appendChild(this.list);
+    this.sec.appendChild(this.list);
 
     this.started = []
     this.blocks = [];

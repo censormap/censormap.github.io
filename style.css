@@ -49,6 +49,7 @@ h1, h2, h3, h4, h5 {
 
 header {
   color: lightgrey;
+  padding-bottom: 2%;
 }
 
 header a {
@@ -58,8 +59,8 @@ header a {
   cursor: pointer;
 }
 
-header p {
-  color: lightgrey;
+section {
+  padding-bottom: 2%;
 }
 
 footer {
@@ -68,6 +69,10 @@ footer {
 }
 
 footer i {
+  color: lightgrey;
+}
+
+.hint {
   color: lightgrey;
 }
 
@@ -115,5 +120,4 @@ footer i {
 
 #map {
   height: 100%;
-  margin-top: 5%;
 }
