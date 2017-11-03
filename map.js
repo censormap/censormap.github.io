@@ -36,11 +36,11 @@ function makeInfoBox(controlDiv, map) {
 
   // Set CSS for the control interior.
   var controlText = document.createElement('div');
-  controlText.style.color = 'rgb(25,25,25)';
-  controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+  controlText.style.color = 'grey';
+  controlText.style.fontFamily = 'Helvetica, Arial, Sans-Serif';
   controlText.style.fontSize = '100%';
   controlText.style.padding = '6px';
-  controlText.textContent = 'The map shows all pings made in the last week.';
+  controlText.textContent = 'blue: all sites available, red: some sites are blocked';
   controlUI.appendChild(controlText);
 }
 
@@ -86,7 +86,7 @@ var layers = {};
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 0, lng: 0},
-    zoom: 2,
+    zoom: 3,
     styles: [{
       featureType: 'poi',
       stylers: [{ visibility: 'off' }]  // Turn off POI.
@@ -129,6 +129,7 @@ function initMap() {
   });
 
   Net.getLocation(function (data) {
+    console.log("Moving to user location", data);
     map.panTo(new google.maps.LatLng(data.latitude, data.longitude));
     map.zoomTo(3);
   });

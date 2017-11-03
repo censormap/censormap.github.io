@@ -58,6 +58,10 @@ header a {
   cursor: pointer;
 }
 
+header p {
+  color: lightgrey;
+}
+
 footer {
   padding-top: 2em;
   color: lightgrey;
