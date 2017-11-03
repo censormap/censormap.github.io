@@ -118,6 +118,7 @@ function initMap() {
     data: [],
     map: map,
     radius: 16,
+    opacity: 0.7,
     gradient: BLUE_GRADIENT
   });
 
@@ -125,7 +126,9 @@ function initMap() {
   layers['blocks'] = new google.maps.visualization.HeatmapLayer({
     data: [],
     map: map,
-    radius: 16
+    radius: 16,
+    opacity: 0.5,
+    RED_GRADIENT
   });
 
   Net.getLocation(function (data) {
@@ -242,6 +245,24 @@ function addToFirebase(data) {
     });
   });
 }
+
+RED_GRADIENT = [
+  var gradient = [
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(63, 0, 91, 1)',
+  'rgba(127, 0, 63, 1)',
+  'rgba(191, 0, 31, 1)',
+  'rgba(255, 0, 0, 1)'
+]
 
 BLUE_GRADIENT = [
           'rgba(0, 255, 255, 0)',
