@@ -255,4 +255,4 @@ const BLUE_GRADIENT = [
 
 const RED_GRADIENT = [
   'rgba(255, 0, 0, 0)',
-  'rgba(255, 0, 0, 1)'];
+  'rgba(255, 255, 255, 1)'];
