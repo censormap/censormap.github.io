@@ -175,7 +175,7 @@ function onAdded (pingRef) {
   console.log(JSON.stringify(ping));
   PINGS.push(ping);
   // Add the point to a heatmap.
-  if (DEV_IPS.indexOf(ping.ip) > -1) {
+  if (DEV_IPS.indexOf(ping.ip) < 0) {
     if (ping.blocks) {
       console.log("Blocks:" + ping.blocks);
       layers.blocks.getData().push(point);
