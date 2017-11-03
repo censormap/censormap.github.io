@@ -248,9 +248,9 @@ function addToFirebase(data) {
 
 
 const BLUE_GRADIENT = [
-  'rgba(41, 89, 188, 0)',
-  'rgba(41, 89, 188, 0.8)'];
+  'rgba(0, 0, 255, 0)',
+  'rgba(0, 0, 255, 1)'];
 
 const RED_GRADIENT = [
   'rgba(255, 0, 0, 0)',
-  'rgba(255, 0, 0, 0.8)'];
+  'rgba(255, 0, 0, 1)'];
