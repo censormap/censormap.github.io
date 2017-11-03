@@ -134,7 +134,6 @@ function initMap() {
   Net.getLocation(function (data) {
     console.log("Moving to user location", data);
     map.panTo(new google.maps.LatLng(data.latitude, data.longitude));
-    map.zoomTo(3);
   });
 
   initAuthentication(initFirebase.bind(undefined));
@@ -176,7 +175,7 @@ function onAdded (pingRef) {
   console.log(JSON.stringify(ping));
   PINGS.push(ping);
   // Add the point to a heatmap.
-  if (!ping.ip in DEV_IPS) {
+  if (DEV_IPS.indexOf(ping.ip) > -1) {
     if (ping.blocks) {
       console.log("Blocks:" + ping.blocks);
       layers.blocks.getData().push(point);
