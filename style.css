@@ -59,6 +59,16 @@ header a {
   cursor: pointer;
 }
 
+header p {
+  font-size: 0.5em;
+}
+
+header span {
+  white-space: nowrap;
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
 section {
   padding-bottom: 2%;
 }
