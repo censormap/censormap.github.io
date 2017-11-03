@@ -246,8 +246,7 @@ function addToFirebase(data) {
   });
 }
 
-RED_GRADIENT = [
-  var gradient = [
+const RED_GRADIENT = [
   'rgba(63, 0, 91, 1)',
   'rgba(63, 0, 91, 1)',
   'rgba(63, 0, 91, 1)',
@@ -264,7 +263,7 @@ RED_GRADIENT = [
   'rgba(255, 0, 0, 1)'
 ]
 
-BLUE_GRADIENT = [
+const BLUE_GRADIENT = [
           'rgba(0, 255, 255, 0)',
           'rgba(0, 255, 255, 1)',
           'rgba(0, 191, 255, 1)',
