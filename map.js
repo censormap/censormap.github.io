@@ -85,7 +85,7 @@ var layers = {};
  */
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 0, lng: 0},
+    center: {lat: 40, lng: 45},
     zoom: 3,
     styles: [{
       featureType: 'poi',
@@ -131,10 +131,10 @@ function initMap() {
     gradient: RED_GRADIENT
   });
 
-  Net.getLocation(function (data) {
+  /*Net.getLocation(function (data) {
     console.log("Moving to user location", data);
     map.panTo(new google.maps.LatLng(data.latitude, data.longitude));
-  });
+  });*/
 
   initAuthentication(initFirebase.bind(undefined));
 }
