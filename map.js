@@ -157,13 +157,14 @@ function initFirebase() {
 
   // Listener for when a ping is added.
   // TODO: get last n
-  pings.orderByChild('timestamp').startAt(startTime).on('child_added',
-    onAdded
-  );
+  pings.orderByChild('timestamp').startAt(startTime).on('child_added', onAdded);
 
   // Remove old data from the heatmap when a point is removed from firebase.
   pings.on('child_removed', onRemoved);
 }
+
+var BLOCKS = {};
+var CONNS = {};
 
 function onAdded (pingRef) {
 
@@ -177,11 +178,17 @@ function onAdded (pingRef) {
   // Add the point to a heatmap.
   if (DEV_IPS.indexOf(ping.ip) < 0) {
     if (ping.blocks) {
-      console.log(ping.country_code + " block:" + ping.blocks);
-      layers.blocks.getData().push(point);
+      if (!(point in BLOCKS)) {
+        BLOCKS[point] = 1;
+        console.log(ping.country_code + " block:" + ping.blocks);
+        layers.blocks.getData().push(point);
+      }
     } else {
-      console.log(ping.country_code + " connection");
-      layers.connections.getData().push(point);
+      if (!(point in CONNS) {
+        CONNS[point] = 1;
+        console.log(ping.country_code + " connection");
+        layers.connections.getData().push(point);
+      }
     }
   } else {
     console.log("Skipping dev ip " + ping.ip);
@@ -250,7 +257,6 @@ function addToFirebase(data) {
     });
   });
 }
-
 
 const BLUE_GRADIENT = [
   'rgba(0, 0, 255, 0)',
