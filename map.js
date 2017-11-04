@@ -177,11 +177,14 @@ function onAdded (pingRef) {
   // Add the point to a heatmap.
   if (DEV_IPS.indexOf(ping.ip) < 0) {
     if (ping.blocks) {
-      console.log("Blocks:" + ping.blocks);
+      console.log(ping.country_code + " block:" + ping.blocks);
       layers.blocks.getData().push(point);
     } else {
+      console.log(ping.country_code + " connection");
       layers.connections.getData().push(point);
     }
+  } else {
+    console.log("Skipping dev ip " + ping.ip);
   }
 
   // Requests entries older than expiry time (1 week).
