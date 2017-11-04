@@ -128,7 +128,7 @@ function initMap() {
     map: map,
     radius: 16,
     opacity: 0.5,
-    RED_GRADIENT
+    gradient: RED_GRADIENT
   });
 
   Net.getLocation(function (data) {
