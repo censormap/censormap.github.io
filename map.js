@@ -176,16 +176,18 @@ function onAdded (pingRef) {
   console.log(JSON.stringify(ping));
   PINGS.push(ping);
   // Add the point to a heatmap.
+  // We only the first one for each IP
+  // TODO: really should be only the last n
   if (DEV_IPS.indexOf(ping.ip) < 0) {
     if (ping.blocks) {
-      if (!(point in BLOCKS)) {
-        BLOCKS[point] = 1;
+      if (!(ping.ip in BLOCKS)) { // Only the first one
+        BLOCKS[ping.ip] = 1;
         console.log(ping.country_code + " block:" + ping.blocks);
         layers.blocks.getData().push(point);
       }
     } else {
-      if (!(point in CONNS)) {
-        CONNS[point] = 1;
+      if (!(ping.ip in CONNS)) {
+        CONNS[ping.ip] = 1;
         console.log(ping.country_code + " connection");
         layers.connections.getData().push(point);
       }
