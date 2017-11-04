@@ -184,7 +184,7 @@ function onAdded (pingRef) {
         layers.blocks.getData().push(point);
       }
     } else {
-      if (!(point in CONNS) {
+      if (!(point in CONNS)) {
         CONNS[point] = 1;
         console.log(ping.country_code + " connection");
         layers.connections.getData().push(point);
