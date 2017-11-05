@@ -117,8 +117,8 @@ function initMap() {
   layers['connections'] = new google.maps.visualization.HeatmapLayer({
     data: [],
     map: map,
-    radius: 16,
-    opacity: 0.7,
+    radius: 10,
+    opacity: 1.0,
     gradient: BLUE_GRADIENT
   });
 
@@ -126,8 +126,8 @@ function initMap() {
   layers['blocks'] = new google.maps.visualization.HeatmapLayer({
     data: [],
     map: map,
-    radius: 16,
-    opacity: 0.5,
+    radius: 10,
+    opacity: 1.0,
     gradient: RED_GRADIENT
   });
 
@@ -140,7 +140,6 @@ function initMap() {
 }
 
 var PINGS = [];
-var DEV_IPS = ["212.42.214.162", "78.109.71.242"];
 
 /**
  * Set up a Firebase with deletion on pings older than expiryMilliseconds
@@ -178,23 +177,20 @@ function onAdded (pingRef) {
   // Add the point to a heatmap.
   // We only the first one for each IP
   // TODO: really should be only the last n
-  if (DEV_IPS.indexOf(ping.ip) < 0) {
-    if (ping.blocks) {
-      if (!(point in BLOCKS)) { // Only the first one
-        BLOCKS[point] = 1;
-        console.log(ping.country_code + " block " + ping.blocks);
-        layers.blocks.getData().push(point);
-      }
-    } else {
-      if (!(point in CONNS)) {
-        CONNS[point] = 1;
-        console.log(ping.country_code + " connection");
-        layers.connections.getData().push(point);
-      }
+  if (ping.blocks) {
+    if (!(point in BLOCKS)) { // Only the first one
+      BLOCKS[point] = 1;
+      console.log(ping.country_code + " block " + ping.blocks);
+      layers.blocks.getData().push(point);
     }
   } else {
-    console.log("Skipping dev ip " + ping.ip);
+    if (!(point in CONNS)) {
+      CONNS[point] = 1;
+      console.log(ping.country_code + " connection");
+      layers.connections.getData().push(point);
+    }
   }
+
 
   // Requests entries older than expiry time (1 week).
   var expiryMilliseconds = Math.max(ONE_WEEK - elapsed, 0);
