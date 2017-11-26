@@ -162,17 +162,18 @@ function initFirebase() {
   pings.on('child_removed', onRemoved);
 }
 
-function _intersect (a, b) {
-  for (let x of a) {
-    if (x in b) {
-      return true;
-    }
-  }
-  return false;
-}
-
 var CONNS = {};
 var BLOCKS = {};
+
+function intersects (a, b) {
+    var i;
+    for (i in a) {
+      if (b.indexOf(a[i]) > -1) {
+        return true;
+      }
+    }
+    return false;
+}
 
 function onAdded (pingRef) {
 
@@ -186,7 +187,8 @@ function onAdded (pingRef) {
   // Add the point to a heatmap.
   // We only the first one for each IP
   // TODO: really should be only the last n
-  if (_intersect(ping.blocks, DOMAINS)) {
+
+  if (intersects(ping.blocks, DOMAINS)) {
     if (!(point in BLOCKS)) { // Only the first one
       BLOCKS[point] = 1;
       console.log(ping.country_code + " block " + ping.blocks);
