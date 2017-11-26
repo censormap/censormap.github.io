@@ -162,6 +162,18 @@ function initFirebase() {
   pings.on('child_removed', onRemoved);
 }
 
+function _intersect (a, b) {
+  for (let x of a) {
+    if (x in b) {
+      return true;
+    }
+  }
+  return false;
+}
+
+var CONNS = {};
+var BLOCKS = {};
+
 function onAdded (pingRef) {
 
   // Get that ping from firebase.
@@ -174,14 +186,19 @@ function onAdded (pingRef) {
   // Add the point to a heatmap.
   // We only the first one for each IP
   // TODO: really should be only the last n
-  if (ping.blocks) {
+  if (_intersect(ping.blocks, DOMAINS)) {
+    if (!(point in BLOCKS)) { // Only the first one
+      BLOCKS[point] = 1;
       console.log(ping.country_code + " block " + ping.blocks);
       layers.blocks.getData().push(point);
+    }
   } else {
+    if (!(point in CONNS)) {  // Only the first one
+      CONNS[point] = 1;
       console.log(ping.country_code + " connection");
       layers.connections.getData().push(point);
+    }
   }
-
 
   // Requests entries older than expiry time (1 week).
   var expiryMilliseconds = Math.max(TWO_MONTHS - elapsed, 0);
