@@ -20,7 +20,7 @@ var data = {
   // See https://freegeoip.net/json/
 };
 
-const ONE_WEEK = 7 * 24 * 60 * 60 * 1000; // ms
+const TWO_MONTHS = 60 * 24 * 60 * 60 * 1000; // ms
 
 function makeInfoBox(controlDiv, map) {
   // Set CSS for the control border.
@@ -149,7 +149,7 @@ var PINGS = [];
 function initFirebase() {
 
   // 1 week before current time.
-  var startTime = new Date().getTime() - ONE_WEEK;
+  var startTime = new Date().getTime() - TWO_MONTHS;
 
   // Reference to the pings in Firebase.
   var pings = firebase.database().ref('pings');
@@ -161,9 +161,6 @@ function initFirebase() {
   // Remove old data from the heatmap when a point is removed from firebase.
   pings.on('child_removed', onRemoved);
 }
-
-var BLOCKS = {};
-var CONNS = {};
 
 function onAdded (pingRef) {
 
@@ -178,22 +175,16 @@ function onAdded (pingRef) {
   // We only the first one for each IP
   // TODO: really should be only the last n
   if (ping.blocks) {
-    if (!(point in BLOCKS)) { // Only the first one
-      BLOCKS[point] = 1;
       console.log(ping.country_code + " block " + ping.blocks);
       layers.blocks.getData().push(point);
-    }
   } else {
-    if (!(point in CONNS)) {
-      CONNS[point] = 1;
       console.log(ping.country_code + " connection");
       layers.connections.getData().push(point);
-    }
   }
 
 
   // Requests entries older than expiry time (1 week).
-  var expiryMilliseconds = Math.max(ONE_WEEK - elapsed, 0);
+  var expiryMilliseconds = Math.max(TWO_MONTHS - elapsed, 0);
   // Set client timeout to remove the point after a certain time.
   window.setTimeout(function() {
     // Delete the old point from the database.
