@@ -117,7 +117,7 @@ function initMap() {
   layers['connections'] = new google.maps.visualization.HeatmapLayer({
     data: [],
     map: map,
-    radius: 10,
+    radius: 1,
     opacity: 1.0,
     gradient: BLUE_GRADIENT,
     dissipating: false
@@ -127,7 +127,7 @@ function initMap() {
   layers['blocks'] = new google.maps.visualization.HeatmapLayer({
     data: [],
     map: map,
-    radius: 10,
+    radius: 1,
     opacity: 1.0,
     gradient: RED_GRADIENT,
     dissipating: false
