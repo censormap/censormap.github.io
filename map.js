@@ -119,7 +119,8 @@ function initMap() {
     map: map,
     radius: 10,
     opacity: 1.0,
-    gradient: BLUE_GRADIENT
+    gradient: BLUE_GRADIENT,
+    dissipating: false
   });
 
   // Create a heatmap.
@@ -128,7 +129,8 @@ function initMap() {
     map: map,
     radius: 10,
     opacity: 1.0,
-    gradient: RED_GRADIENT
+    gradient: RED_GRADIENT,
+    dissipating: false
   });
 
   /*Net.getLocation(function (data) {
