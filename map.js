@@ -20,7 +20,7 @@ var data = {
   // See https://freegeoip.net/json/
 };
 
-const TWO_MONTHS = 60 * 24 * 60 * 60 * 1000; // ms
+const FOUR_MONTHS = 4 * 30 * 24 * 60 * 60 * 1000; // ms
 
 function makeInfoBox(controlDiv, map) {
   // Set CSS for the control border.
@@ -151,7 +151,7 @@ var PINGS = [];
 function initFirebase() {
 
   // 1 week before current time.
-  var startTime = new Date().getTime() - TWO_MONTHS;
+  var startTime = new Date().getTime() - FOUR_MONTHS;
 
   // Reference to the pings in Firebase.
   var pings = firebase.database().ref('pings');
@@ -205,7 +205,7 @@ function onAdded (pingRef) {
   }
 
   // Requests entries older than expiry time (1 week).
-  var expiryMilliseconds = Math.max(TWO_MONTHS - elapsed, 0);
+  var expiryMilliseconds = Math.max(FOUR_MONTHS - elapsed, 0);
   // Set client timeout to remove the point after a certain time.
   window.setTimeout(function() {
     // Delete the old point from the database.
