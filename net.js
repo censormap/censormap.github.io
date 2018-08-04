@@ -9,8 +9,8 @@ class Net {
     .then(function(res) {
       console.log('Geolocation res', res);
       res.json().then(function(data) {
-          console.log("location:", data);
-          fn(data);
+          console.log("location:", data.location);
+          fn(data.location);
       }.bind(this));
     }).catch(function(error) {
       console.log('Geolocation failed:', error);
