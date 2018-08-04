@@ -141,8 +141,6 @@ function initMap() {
   initAuthentication(initFirebase.bind(undefined));
 }
 
-var PINGS = [];
-
 /**
  * Set up a Firebase with deletion on pings older than expiryMilliseconds
  * @param {!google.maps.visualization.HeatmapLayer} heatmap The heatmaps to
@@ -164,6 +162,7 @@ function initFirebase() {
   pings.on('child_removed', onRemoved);
 }
 
+var PINGS = [];
 var CONNS = {};
 var BLOCKS = {};
 
@@ -217,16 +216,17 @@ function onAdded (pingRef) {
   console.log('lat:', lat, 'lng:', lng);
   
   var point = new google.maps.LatLng(lat, lng);
-  var elapsed = new Date().getTime() - ping.timestamp;
 
   console.log(JSON.stringify(ping));
   PINGS.push(ping);
   // Add the point to a heatmap.
-  // We only the first one for each IP
-  // TODO: really should be only the last n
+  // We only add the first 1 for each IP
+  // TODO: Really should be only the last n.
 
   if (intersects(ping.blocks, DOMAINS)) {
-    if (!(point in BLOCKS)) { // Only the first one
+    if (point in BLOCKS) { 
+      BLOCKS[point] += 1;
+    } else {
       BLOCKS[point] = 1;
       console.log(ping.country_code + " block " + ping.blocks);
       if (!ping.country_code || ping.country_code != 'AM') { // Too much noise from testing
@@ -234,22 +234,24 @@ function onAdded (pingRef) {
       }
     }
   } else {
-    if (!(point in CONNS)) {  // Only the first one
+    if (point in CONNS) {
+      CONNS[point] += 1;
+    } else {
       CONNS[point] = 1;
       console.log(ping.country_code + " connection");
-      layers.connections.getData().push(point);
+      layers.connections.getData().push(point);        
     }
   }
 
-  // Requests entries older than expiry time, although it is really unnecessary for large values.
+  /* Unnecessary for large values like SIX_MONTHS
+  // Requests entries older than expiry time
+    var elapsed = new Date().getTime() - ping.timestamp;
   var expiryMilliseconds = Math.max(SIX_MONTHS - elapsed, 0);
   // Set client timeout to remove the point after a certain time.
   window.setTimeout(function() {
     // Delete the old point from the database.
-    if (pingRef) {
-      pingRef.ref().remove();
-    }
-  }, expiryMilliseconds);
+    pingRef.ref().remove();
+  }, expiryMilliseconds);*/
 }
 
 function onRemoved(pingRef, prevChildKey) {
