@@ -207,7 +207,7 @@ function onAdded (pingRef) {
   }
 
   // Requests entries older than expiry time (1 week).
-  var expiryMilliseconds = Math.max(FOUR_MONTHS - elapsed, 0);
+  var expiryMilliseconds = Math.max(SIX_MONTHS - elapsed, 0);
   // Set client timeout to remove the point after a certain time.
   window.setTimeout(function() {
     // Delete the old point from the database.
