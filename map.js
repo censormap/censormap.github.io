@@ -17,7 +17,7 @@ var data = {
   latitude: null,
   longitude: null,
   ip: null,
-  // See https://freegeoip.net/json/
+  // See http://ip-api.com/json
 };
 
 const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000; // ms
