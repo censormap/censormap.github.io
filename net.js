@@ -1,14 +1,18 @@
 class Net {
+   
+  const GEOLOC_URL = 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBN7v2VcTeu5OIHx9q31mBd9_14bX86tRg';
 
   static getLocation(fn) {
     // We purposefully do not cache
-    fetch("http://ip-api.com/json").then(function(response) {
-      response.json().then(function(data) {
+    fetch(GEOLOC_URL, {method: 'post'})
+    .then(function(res) {
+      console.log('Geolocation res', res);
+      res.json().then(function(data) {
           console.log("location:", data);
           fn(data);
       }.bind(this));
-    }).catch(function() {
-      console.log("Connection failed");
+    }).catch(function(error) {
+      console.log('Geolocation failed:', error);
     });
   }
 
