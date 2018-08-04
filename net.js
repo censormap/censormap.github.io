@@ -1,9 +1,10 @@
+const GEOLOC_URL = 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBN7v2VcTeu5OIHx9q31mBd9_14bX86tRg';
+
 class Net {
-   
-  const GEOLOC_URL = 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBN7v2VcTeu5OIHx9q31mBd9_14bX86tRg';
 
   static getLocation(fn) {
     // We purposefully do not cache
+
     fetch(GEOLOC_URL, {method: 'post'})
     .then(function(res) {
       console.log('Geolocation res', res);
