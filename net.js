@@ -2,7 +2,7 @@ class Net {
 
   static getLocation(fn) {
     // We purposefully do not cache
-    fetch("https://freegeoip.net/json/").then(function(response) {
+    fetch("http://ip-api.com/json").then(function(response) {
       response.json().then(function(data) {
           console.log("location:", data);
           fn(data);
