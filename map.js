@@ -227,7 +227,7 @@ function onAdded (pingRef) {
     if (!(point in BLOCKS)) { // Only the first one
       BLOCKS[point] = 1;
       console.log(ping.country_code + " block " + ping.blocks);
-      if (ping.country_code != 'AM') { // Too much noise from testing
+      if (!ping.country_code || ping.country_code != 'AM') { // Too much noise from testing
         layers.blocks.getData().push(point);        
       }
     }
