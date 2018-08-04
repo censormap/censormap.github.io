@@ -20,7 +20,7 @@ var data = {
   // See https://freegeoip.net/json/
 };
 
-const FOUR_MONTHS = 4 * 30 * 24 * 60 * 60 * 1000; // ms
+const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000; // ms
 
 function makeInfoBox(controlDiv, map) {
   // Set CSS for the control border.
@@ -151,7 +151,7 @@ var PINGS = [];
 function initFirebase() {
 
   // 1 week before current time.
-  var startTime = new Date().getTime() - FOUR_MONTHS;
+  var startTime = new Date().getTime() - SIX_MONTHS;
 
   // Reference to the pings in Firebase.
   var pings = firebase.database().ref('pings');
@@ -194,7 +194,9 @@ function onAdded (pingRef) {
     if (!(point in BLOCKS)) { // Only the first one
       BLOCKS[point] = 1;
       console.log(ping.country_code + " block " + ping.blocks);
-      layers.blocks.getData().push(point);
+      if (ping.country_code != 'AM') { // Too much noise from testing
+        layers.blocks.getData().push(point);        
+      }
     }
   } else {
     if (!(point in CONNS)) {  // Only the first one
