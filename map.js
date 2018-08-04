@@ -181,7 +181,40 @@ function onAdded (pingRef) {
 
   // Get that ping from firebase.
   var ping = pingRef.val();
-  var point = new google.maps.LatLng(ping.latitude, ping.longitude);
+  
+  // Current vs legacy:
+  /*
+    legacy:
+      -LFg86ikb49l0cRaC1-s
+        blocks
+        city
+        country_code
+        country_name
+        ip
+        latitude
+        longitude
+        metro_code
+        region_code
+        region_name
+        time_zone
+        timestamp: 
+        1529748945331
+        zip_code: 
+
+    current:
+      -LJ3nyBjqLQl44QvKiLq
+        accuracy: 
+        2335
+        location
+        lat
+        lng
+        timestamp: 
+        1533384057398
+  */
+  const lat = ping.location ? ping.location.lat : ping.latitude;
+  const lon = ping.location ? ping.location.lon : ping.latitude;
+  
+  var point = new google.maps.LatLng(lat, lon);
   var elapsed = new Date().getTime() - ping.timestamp;
 
   console.log(JSON.stringify(ping));
