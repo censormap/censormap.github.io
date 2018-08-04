@@ -182,6 +182,7 @@ function onAdded (pingRef) {
   // Get that ping from firebase.
   var ping = pingRef.val();
   
+  console.log('ping:', ping);
   // Current vs legacy:
   /*
     legacy:
@@ -213,6 +214,7 @@ function onAdded (pingRef) {
   */
   const lat = ping.location ? ping.location.lat : ping.latitude;
   const lon = ping.location ? ping.location.lon : ping.latitude;
+  console.log('lat:', lat, 'lon:', lon);
   
   var point = new google.maps.LatLng(lat, lon);
   var elapsed = new Date().getTime() - ping.timestamp;
@@ -239,12 +241,14 @@ function onAdded (pingRef) {
     }
   }
 
-  // Requests entries older than expiry time (1 week).
+  // Requests entries older than expiry time, although it is really unnecessary for large values.
   var expiryMilliseconds = Math.max(SIX_MONTHS - elapsed, 0);
   // Set client timeout to remove the point after a certain time.
   window.setTimeout(function() {
     // Delete the old point from the database.
-    pingRef.ref().remove();
+    if (pingRef) {
+      pingRef.ref().remove();
+    }
   }, expiryMilliseconds);
 }
 
