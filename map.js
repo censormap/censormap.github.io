@@ -213,10 +213,10 @@ function onAdded (pingRef) {
         1533384057398
   */
   const lat = ping.location ? ping.location.lat : ping.latitude;
-  const lon = ping.location ? ping.location.lon : ping.latitude;
-  console.log('lat:', lat, 'lon:', lon);
+  const lng = ping.location ? ping.location.lng : ping.latitude;
+  console.log('lat:', lat, 'lng:', lng);
   
-  var point = new google.maps.LatLng(lat, lon);
+  var point = new google.maps.LatLng(lat, lng);
   var elapsed = new Date().getTime() - ping.timestamp;
 
   console.log(JSON.stringify(ping));
