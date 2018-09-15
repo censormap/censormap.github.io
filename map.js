@@ -20,7 +20,7 @@ var data = {
   // See http://ip-api.com/json
 };
 
-const SIX_MONTHS = 6 * 30 * 24 * 60 * 60 * 1000; // ms
+const ONE_YEAR = 12 * 30 * 24 * 60 * 60 * 1000; // ms
 
 function makeInfoBox(controlDiv, map) {
   // Set CSS for the control border.
@@ -149,7 +149,7 @@ function initMap() {
 function initFirebase() {
 
   // 1 week before current time.
-  var startTime = new Date().getTime() - SIX_MONTHS;
+  var startTime = new Date().getTime() - ONE_YEAR;
 
   // Reference to the pings in Firebase.
   var pings = firebase.database().ref('pings');
@@ -243,10 +243,10 @@ function onAdded (pingRef) {
     }
   }
 
-  /* Unnecessary for large values like SIX_MONTHS
+  /* Unnecessary for large values like ONE_YEAR
   // Requests entries older than expiry time
     var elapsed = new Date().getTime() - ping.timestamp;
-  var expiryMilliseconds = Math.max(SIX_MONTHS - elapsed, 0);
+  var expiryMilliseconds = Math.max(ONE_YEAR - elapsed, 0);
   // Set client timeout to remove the point after a certain time.
   window.setTimeout(function() {
     // Delete the old point from the database.
